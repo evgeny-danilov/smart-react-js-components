@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require react
 //= require react_ujs
+//= require js-routes
 //= require components
 //= require_tree .
+

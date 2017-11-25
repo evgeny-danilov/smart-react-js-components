@@ -17,7 +17,9 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # gem 'bcrypt', '~> 3.1.7'
 
- gem 'react-rails', '~> 2.4'
+gem 'haml-rails'
+gem 'react-rails', '~> 2.4'
+gem "js-routes"
 
 # gem 'capistrano-rails', group: :development
 

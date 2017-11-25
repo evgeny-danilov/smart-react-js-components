@@ -1,4 +1,4 @@
-window.PostRow = createReactClass({
+var PostRow = createReactClass({
   componentDidMount() {
     console.log('Component mounted');
   },
@@ -31,35 +31,40 @@ window.PostRow = createReactClass({
         <td>{item.body}</td>
         <td>
           <button onClick={this.updateClick.bind(this, item.id)}>
-            Update
+            Update jsx
           </button>
+        </td>
+        <td>
+          <a href={Routes.post_path(item.id)}>
+            Show
+          </a>
         </td>
       </tr>
     )
   }
 });
 
-window.Posts = createReactClass({
+var Posts = createReactClass({
   getInitialState() {
     return { items: [] }
   }, 
 
   render: function () {
     return (
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Body</th>
-          <th colSpan="3"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {this.props.posts.map((post, index) => 
-          <PostRow key={index} post={post}/>
-        )}
-      </tbody>
-    </table>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Body</th>
+            <th colSpan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.posts.map((post, index) => 
+            <PostRow key={index} post={post}/>
+          )}
+        </tbody>
+      </table>
     )
   }
 });

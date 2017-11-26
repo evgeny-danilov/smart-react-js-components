@@ -13,8 +13,8 @@ var PostRow = createReactClass({
   }, 
 
   updateClick(id) {
-    $.ajax({
-      url: "posts/" + id + ".json",
+    $.getJSON({
+      url: Routes.post_path(id),
       type: 'GET',
       success: (item) => {
         this.setState({ item: item })

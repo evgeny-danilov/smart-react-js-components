@@ -11,12 +11,12 @@
 
   updateClick: (id) ->
     _this = this
-    $.ajax
-      url: 'posts/' + id + '.json'
+    $.getJSON
+      url: Routes.post_path(id)
       type: 'GET'
-      success: (item) ->
-        _this.setState item: item
-        console.log 'it worked!', item
+      success: (data) ->
+        _this.setState item: data
+        console.log 'it worked!', data
         return
     return
 

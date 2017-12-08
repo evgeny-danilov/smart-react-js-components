@@ -26,5 +26,9 @@
 
 
 %h1
-  Test money input
-= react_component "ReactMoneyInput", { value: '0,00' }
+  Test money input (version 1)
+= react_component "ReactMoneyInput", { value: '0,00', type: 'tel' }
+
+/ %h1
+/   Test money input (version 2)
+/ = react_component "ReactMoneyInput", { value: '0,00', type: 'text' }

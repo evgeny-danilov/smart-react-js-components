@@ -17,6 +17,10 @@
     decimal_pos = old_val.indexOf(',')
     is_key_unidentified = (keycode >= 128 && key == 'Unidentified')
 
+    # pp = {pos, key, keycode, next_char, in_decimal, is_key_unidentified}
+    # $('.qqq').html(JSON.stringify pp)
+
+
     if key == 'Delete' && /^[\,\.]$/.test(next_char)
       return { val: old_val, pos: pos } # don`t delete decimal symbol
     else if key == 'Backspace' && pos > 0
@@ -65,7 +69,21 @@
 
 
   onkeydown: (event) ->
-    keycode = event.keyCode || event.charCode
+    which = event.which
+    keyCode = event.keyCode
+    charCode = event.charCode
+    key = event.key
+    pp = {which, keycode, charCode, key}
+    # $('.qqq').html(JSON.stringify pp)
+
+    if (event.keyCode == 229)
+      # killEvent(event)
+      # $('.qqq').html('kill event')
+      event.preventDefault()
+      return
+
+
+    keycode = event.which #|| event.keyCode || event.charCode
     old_pos = event.target.selectionStart
 
     value_hash = @generate_value(event.target.value, old_pos, event.key, keycode)
@@ -102,7 +120,7 @@
   render: ->
     input_params =
       className: 'react_money_input',
-      type: 'tel',
+      type: @props.type || 'text',
       onKeyDown: @onkeydown,
       onChange: @onchange,
       onBlur: @onblur,
@@ -111,6 +129,6 @@
 
     React.createElement('div', null,
       React.createElement('input', input_params, null),
-      React.createElement('span', null, @state.key),
+      React.createElement('span', { className: "qqq"}, @state.key),
     )
 )

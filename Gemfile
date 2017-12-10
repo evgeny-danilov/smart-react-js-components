@@ -10,16 +10,19 @@ gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
-# gem 'therubyracer', platforms: :ruby
-
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
-# gem 'redis', '~> 3.0'
-# gem 'bcrypt', '~> 3.1.7'
 
+gem 'rails-i18n'
+gem 'simple_form'
+gem "js-routes"
 gem 'haml-rails'
 gem 'react-rails', '~> 2.4'
-gem "js-routes"
+gem 'momentjs-rails'
+gem 'bootstrap-sass', '~> 3.3.7'
+gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-timepicker-rails-addon'
+gem 'bootstrap3-datetimepicker-rails'
 
 # gem 'capistrano-rails', group: :development
 
@@ -34,8 +37,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :production do
   gem 'pg', '~> 0.15'

@@ -14,7 +14,15 @@
 //= require jquery_ujs
 //= require react
 //= require react_ujs
+//= require moment
+//= require bootstrap
+//= require bootstrap-datepicker/core
+//= require bootstrap-datetimepicker
+//= require bootstrap-timepicker
+//= require modernizr-native-datapickers
 //= require js-routes
 //= require components
-//= require_tree .
 
+//= require_directory .
+
+$('.datepicker').datepicker()

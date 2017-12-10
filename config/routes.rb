@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     collection do
       get :money
       get :datatime
+      post :datatime_save
     end
 
   end

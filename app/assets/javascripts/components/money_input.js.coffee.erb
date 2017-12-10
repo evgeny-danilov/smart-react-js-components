@@ -1,4 +1,4 @@
-@ReactMoneyInput = createReactClass(
+@ReactMoneySmartInput = createReactClass(
   componentDidMount: ->
 
   getInitialState: ->
@@ -16,10 +16,6 @@
     is_decimal_key = /^[\,\.]$/.test(key)
     decimal_pos = old_val.indexOf(',')
     is_key_unidentified = (keycode >= 128 && key == 'Unidentified')
-
-    # pp = {pos, key, keycode, next_char, in_decimal, is_key_unidentified}
-    # $('.qqq').html(JSON.stringify pp)
-
 
     if key == 'Delete' && /^[\,\.]$/.test(next_char)
       return { val: old_val, pos: pos } # don`t delete decimal symbol
@@ -69,21 +65,7 @@
 
 
   onkeydown: (event) ->
-    which = event.which
-    keyCode = event.keyCode
-    charCode = event.charCode
-    key = event.key
-    pp = {which, keycode, charCode, key}
-    # $('.qqq').html(JSON.stringify pp)
-
-    if (event.keyCode == 229)
-      # killEvent(event)
-      # $('.qqq').html('kill event')
-      event.preventDefault()
-      return
-
-
-    keycode = event.which #|| event.keyCode || event.charCode
+    keycode = event.which || event.keyCode || event.charCode
     old_pos = event.target.selectionStart
 
     value_hash = @generate_value(event.target.value, old_pos, event.key, keycode)

@@ -11,9 +11,12 @@ class ComponentsController < ApplicationController
 
   def datatime_save
     record = Setting.find_by(name: 'date_input')
-    record.update(val: params[:setting][:date_input])
 
-    new_val = Setting.find_by(name: 'date_input').val
-    redirect_to [:datatime, :components], notice: "Date save: #{new_val}"
+    record.date = params[:setting][:date]
+    record.time = params[:setting][:time]
+    record.datetime = params[:setting][:datetime]
+
+    redirect_to [:datatime, :components],
+      notice: "Date save: #{record.date};\nTime save: #{record.time};\nDateTime save: #{record.datetime}"
   end
 end

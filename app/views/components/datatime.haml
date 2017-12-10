@@ -1,17 +1,22 @@
 %h1
-  Native datatime pickers input
+  Native data and time pickers
 
 = simple_form_for @data, url: [:datatime_save, :components], method: :post do |f|
   .form-inputs
     .row
       .form-group.col-xs-4
-        = f.input :date_input,
+        = f.input :date,
                   as: :native_datepicker,
                   label: 'Date',
-                  input_html: { value: @data.val }
+                  input_html: { value: @data.date }
+
+        = f.input :time,
+                  as: :native_timepicker,
+                  label: 'Time',
+                  input_html: { value: @data.time }
 
       .col-xs-4
-        = f.input :val,  input_html: { class: 'datepicker' }
+        = f.input :datetime, as: :string
 
   .form-actions
     = f.button :submit, class: "btn btn-primary"

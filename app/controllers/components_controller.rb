@@ -16,7 +16,9 @@ class ComponentsController < ApplicationController
     record.time = params[:setting][:time]
     record.datetime = params[:setting][:datetime]
 
+    record.save
+
     redirect_to [:datatime, :components],
-      notice: "Date save: #{record.date};\nTime save: #{record.time};\nDateTime save: #{record.datetime}"
+      notice: "Date save: #{record.date};<br>Time save: #{record.time};<br>DateTime save: #{record.datetime}"
   end
 end

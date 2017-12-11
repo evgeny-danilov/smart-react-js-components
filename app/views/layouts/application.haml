@@ -11,6 +11,6 @@
 
     - if notice.present?
       %p#notice.alert.alert-success
-        = notice
+        = notice.html_safe
 
     = yield

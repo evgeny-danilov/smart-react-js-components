@@ -10,7 +10,7 @@ var PostRow = createReactClass({
       title: this.props.post.title,
       body: this.props.post.body
     } }
-  }, 
+  },
 
   updateClick(id) {
     $.getJSON({
@@ -47,7 +47,7 @@ var PostRow = createReactClass({
 var Posts = createReactClass({
   getInitialState() {
     return { items: [] }
-  }, 
+  },
 
   render: function () {
     return (
@@ -60,7 +60,7 @@ var Posts = createReactClass({
           </tr>
         </thead>
         <tbody>
-          {this.props.posts.map((post, index) => 
+          {this.props.posts.map((post, index) =>
             <PostRow key={index} post={post}/>
           )}
         </tbody>

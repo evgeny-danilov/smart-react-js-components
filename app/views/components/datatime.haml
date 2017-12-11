@@ -4,7 +4,7 @@
 = simple_form_for @data, url: [:datatime_save, :components], method: :post do |f|
   .form-inputs
     .row
-      .form-group.col-xs-4
+      .form-group.col-sm-4
         = f.input :date,
                   as: :native_datepicker,
                   label: 'Date',
@@ -15,11 +15,15 @@
                   label: 'Time',
                   input_html: { value: @data.time }
 
-      .col-xs-4
-        = f.input :datetime, as: :string
+      .col-sm-4
+        = f.input :datetime,
+                  as: :native_datetimepicker,
+                  label: 'Datetime',
+                  input_html: { value: @data.datetime }
+
 
   .form-actions
-    = f.button :submit, class: "btn btn-primary"
+    = f.button :submit, class: "btn btn-primary", disabled: true
 
 
 %p

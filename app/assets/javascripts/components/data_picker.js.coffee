@@ -1,12 +1,12 @@
-@ReactTimePickerNativeInput = createReactClass(
+@ReactDataPickerNativeInput = createReactClass(
 
   componentDidMount: ->
     $input = $(@state.inputRef)
-    $input.timepicker(format: 'dd/mm/yyyy', autoclose: true)
+    $input.datepicker(format: 'dd/mm/yyyy', autoclose: true)
 
-    # Add support for timepickers globally to use input[type=date]
+    # Add support for datepickers globally to use input[type=date]
     nativeDateFormat = /^\d{4}-\d{2}-\d{2}$/
-    timepickerDateFormat = /^\d{2}\/\d{2}\/\d{2}$/
+    datepickerDateFormat = /^\d{2}\/\d{2}\/\d{2}$/
 
     isMobile = $(window).width() <= 480 || Modernizr.touchevents;
 
@@ -14,28 +14,28 @@
     valMoment = undefined
     if nativeDateFormat.test(val)
       valMoment = moment(val, 'YYYY-MM-DD')
-    else if timepickerDateFormat.test(val)
+    else if datepickerDateFormat.test(val)
       valMoment = moment(val, 'MM/DD/YY')
 
     isMoment = moment.isMoment(valMoment)
     if isMobile and Modernizr.inputtypes.date
       if isMoment
         val = valMoment.format('YYYY-MM-DD')
-      $input.timepicker 'remove'
+      $input.datepicker 'remove'
       $input.val val
-      $input.attr 'type', 'time'
+      $input.attr 'type', 'date'
     else
       val = valMoment.format('MM/DD/YY') if isMoment
       $input.attr 'type', 'text'
       $input.val val
 
       if isMobile
-        $input.timepicker 'remove'
+        $input.datepicker 'remove'
       else
         if isMoment
-          $input.timepicker 'update', valMoment.toDate()
+          $input.datepicker 'update', valMoment.toDate()
         else
-          $input.timepicker()
+          $input.datepicker()
 
   getInitialState: ->
     return {
@@ -51,12 +51,12 @@
       ref: (input) -> _this.state.inputRef = input,
       className: 'form-control',
       name: @props.attribute,
-    input_params['value'] = @props.value if @props.value
+      defaultValue: @props.value
 
     React.createElement('div', { className: 'input-group' },
       React.createElement('input', input_params, null),
       React.createElement('span', { className: 'input-group-addon' },
-        React.createElement('span', { className: 'glyphicon glyphicon-time' }, null),
+        React.createElement('span', { className: 'glyphicon glyphicon-calendar' }, null),
       ),
     )
 )

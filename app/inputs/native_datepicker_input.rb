@@ -1,3 +1,6 @@
+# Use in view:
+#   f.input :attr, as: :native_datapicker
+
 class NativeDatepickerInput < SimpleForm::Inputs::Base
   def input(wrapper_options)
     component_options = {

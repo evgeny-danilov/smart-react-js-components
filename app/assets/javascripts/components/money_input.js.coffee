@@ -63,8 +63,32 @@
       new_val = old_val.slice(0, pos) + key + old_val.slice(pos+1)
       return { val: new_val, pos: pos + 1 }
 
+  logger: (event) ->
+    type = event.type
+    which = event.which
+    key = event.key
+    keyCode = event.keyCode
+    charCode = event.charCode
+    old_pos = event.target.selectionStart
+    input_value = event.target.value
+    keyIdentifier = event.keyIdentifier
+    code = event.code
+
+    hash = JSON.stringify { input_value, keyIdentifier, code, which, key, keyCode, charCode, old_pos, type }
+    $('.console').append("<div>#{hash}</div")
+
+  oninput: (event) ->
+    @logger event
+
+  onkeyup: (event) ->
+    @logger event
+
+  onkeypress: (event) ->
+    @logger event
 
   onkeydown: (event) ->
+    @logger event
+
     keycode = event.which || event.keyCode || event.charCode
     old_pos = event.target.selectionStart
 
@@ -100,11 +124,17 @@
       event.target.setSelectionRange(0, 0)
 
   render: ->
+    # if (Modernizr.oninput) - include onInput Event to Modernize lib
+    #
+
     input_params =
       className: 'react_money_input',
       type: @props.type || 'text',
       onKeyDown: @onkeydown,
+      onKeyUp: @onkeyup,
+      onKeyPress: @onkeypress,
       onChange: @onchange,
+      onInput: @oninput,
       onBlur: @onblur,
       onClick: @onclick,
       value: @state.value,

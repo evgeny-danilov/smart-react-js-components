@@ -130,6 +130,7 @@
     input_params =
       className: 'react_money_input',
       type: @props.type || 'text',
+      pattern: @props.pattern,
       onKeyDown: @onkeydown,
       onKeyUp: @onkeyup,
       onKeyPress: @onkeypress,

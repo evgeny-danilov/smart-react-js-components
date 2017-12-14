@@ -123,6 +123,11 @@
     if value == '' || parseFloat(value) == 0
       event.target.setSelectionRange(0, 0)
 
+  compositionstart: (event) ->
+    logger(event)
+  compositionend: (event) ->
+    logger(event)
+
   render: ->
     # if (Modernizr.oninput) - include onInput Event to Modernize lib
     #
@@ -131,11 +136,14 @@
       className: 'react_money_input',
       type: @props.type || 'text',
       pattern: @props.pattern,
+      inputMode: 'numeric',
       onKeyDown: @onkeydown,
       onKeyUp: @onkeyup,
       onKeyPress: @onkeypress,
       onChange: @onchange,
       onInput: @oninput,
+      onCompositionStart: @compositionStart,
+      onCompositionEnd: @compositionEnd,
       onBlur: @onblur,
       onClick: @onclick,
       value: @state.value,

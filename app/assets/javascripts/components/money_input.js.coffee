@@ -123,11 +123,6 @@
     if value == '' || parseFloat(value) == 0
       event.target.setSelectionRange(0, 0)
 
-  compositionstart: (event) ->
-    logger(event)
-  compositionend: (event) ->
-    logger(event)
-
   render: ->
     # if (Modernizr.oninput) - include onInput Event to Modernize lib
     #
@@ -142,8 +137,6 @@
       onKeyPress: @onkeypress,
       onChange: @onchange,
       onInput: @oninput,
-      onCompositionStart: @compositionStart,
-      onCompositionEnd: @compositionEnd,
       onBlur: @onblur,
       onClick: @onclick,
       value: @state.value,

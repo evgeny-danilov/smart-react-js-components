@@ -133,7 +133,7 @@
     #
 
     input_params =
-      className: 'react_money_input',
+      className: 'react_money_input form-control',
       type: @props.type || 'text',
       pattern: @props.pattern,
       inputMode: 'numeric',
@@ -148,7 +148,10 @@
       onClick: @onclick,
       value: @state.value,
 
-    React.createElement('div', null,
-      React.createElement('input', input_params, null),
+    React.createElement('div', { className: 'form-group' },
+      React.createElement('div', { className: 'input-group' },
+        React.createElement('span', { className: 'input-group-addon' }, '€'),
+        React.createElement('input', input_params, null),
+      )
     )
 )

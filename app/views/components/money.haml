@@ -1,10 +1,13 @@
-%h1
-  Test money input
-= react_component "ReactMoneySmartInput", { value: '0,00', type: 'tel' }
+%h1 Test money input (version 1)
+%i good for Android
+= react_component "ReactMoneySmartInput", { value: '0,00', type: 'tel', pattern: '[0-9,.]' }
 
-%h1
-  Test money input (version 2)
-= react_component "ReactMoneySmartInput", { value: '0,00', type: 'text' }
+%h1 Test money input (version 2)
+%i good for iPhone
+= react_component "ReactMoneySmartInput", { value: '0,00', type: 'text', pattern: '[0-9,.]' }
+
+%h1 Test money input (version 3)
+= react_component "ReactMoneySmart2Input", { value: '0,00', type: 'number' }
 
 %p
 %div

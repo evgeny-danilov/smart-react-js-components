@@ -1,17 +1,20 @@
-%h3 Test money input (version 1)
-%i good for Android
+%h3 Money input (version 1)
+%i good for Android, maybe not so good for iPhone
 .row
   .col-sm-3
-    = react_component "ReactMoneySmartInput", { value: '0,00', type: 'tel', pattern: '[0-9,.]*' }
+    = react_component "ReactMoneySmartInput", { value: '0,00', type: 'tel', pattern: '[0-9]*' }
 
-%h3 Test money input (version 2)
-%i good for iPhone, and need to develop for Android Chrome
+%h3 Money input (version 2)
+%i good for iPhone
 .row
   .col-sm-3
-    = react_component "ReactMoneySmartInput", { value: '0,00', type: 'text', pattern: '[0-9,.]*' }
+    = react_component "ReactMoneySmart2Input", { value: '0,00', type: 'text', pattern: '[0-9]*' }
 
-/ %h3 Test money input (version 3)
-/ = react_component "ReactMoneySmart2Input", { value: '0,00', type: 'text' }
+%h3 Money input (version 3)
+%i best of two worlds
+.row
+  .col-sm-3
+    = react_component "ReactMoneySmart2Input", { value: '0,00', type: 'auto', pattern: '[0-9]*' }
 
 %p
 %div

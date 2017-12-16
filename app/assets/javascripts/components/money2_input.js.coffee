@@ -1,21 +1,22 @@
-@ReactMoneySmartInput = createReactClass(
+@ReactMoneySmart2Input = createReactClass(
   componentDidMount: ->
 
   getInitialState: ->
     return {
       value: @props.value,
+      prev_value: @props.value,
+      prev_pos: 0,
     }
 
-  generate_value: (old_val, pos, key, keycode) ->
+  generate_value: (old_val, pos, key) ->
     next_char = old_val[pos]
     prev_char = old_val[pos-1]
     value = parseFloat(old_val.replace(',', '.'))
     is_value_zero = (!old_val.length || value == 0)
     in_decimal = (old_val.indexOf(',') < pos)
     is_digital_key = /^[0-9]$/.test(key)
-    is_decimal_key = /^[\,\.]$/.test(key)
+    is_decimal_key = /^[\,\.\ \=\+\-]$/.test(key)
     decimal_pos = old_val.indexOf(',')
-    is_key_unidentified = (keycode >= 128 && key == 'Unidentified')
 
     if key == 'Delete' && /^[\,\.]$/.test(next_char)
       return { val: old_val, pos: pos } # don`t delete decimal symbol
@@ -28,9 +29,6 @@
       else
         new_val = old_val.slice(0, pos-1) + old_val.slice(pos)
         return { val: new_val, pos: pos - 1 } # replace by '0'
-    else if next_char == ',' && is_key_unidentified
-      # for mobile chrome - skip unidentified symbols
-      return { val: old_val, pos: pos }
 
     else if key.length > 1
       # if press control key (like arrows or 'home')
@@ -77,22 +75,25 @@
     hash = JSON.stringify { input_value, keyIdentifier, code, which, key, keyCode, charCode, old_pos, type }
     # $('.console').append("<div>#{hash}</div")
 
-  oninput: (event) ->
-    @logger event
+  get_key_by_diff: (old_value, new_value) ->
+    return if old_value == undefined || new_value == undefined
+    return unless old_value.length && new_value.length
+    for ch, i in new_value
+      return ch if old_value[i] != new_value[i]
 
-  onkeyup: (event) ->
-    @logger event
+  try_change_value: (event) ->
+    return if @state.prev_value == null || @state.prev_value == undefined
 
-  onkeypress: (event) ->
-    @logger event
+    key = @get_key_by_diff(@state.prev_value, event.target.value)
+    return if key == null || key == undefined
 
-  onkeydown: (event) ->
-    @logger event
+    @change_value(event, key)
 
-    keycode = event.which || event.keyCode || event.charCode
-    old_pos = event.target.selectionStart
+  change_value: (event, key) ->
+    old_pos = @state.prev_pos
+    old_val = @state.prev_value || event.target.value
 
-    value_hash = @generate_value(event.target.value, old_pos, event.key, keycode)
+    value_hash = @generate_value(old_val, old_pos, key)
     if value_hash
       new_val = value_hash['val']
       new_pos = value_hash['pos']
@@ -100,6 +101,35 @@
       event.target.value = new_val
       event.target.setSelectionRange(new_pos, new_pos)
       event.preventDefault()
+    @state.prev_value = null
+
+  oninput: (event) ->
+    @logger event
+    @try_change_value(event)
+
+  onkeyup: (event) ->
+    @logger event
+    @state.prev_value = null
+
+  onkeypress: (event) ->
+    @logger event
+    @state.prev_pos = event.target.selectionStart
+    if event.which == 229
+      @state.prev_value = event.target.value
+
+  onkeydown: (event) ->
+    @logger event
+
+    return if @state.prev_value =='Control' || @state.prev_value == 'Alt'
+    @state.prev_value = null
+    @state.prev_pos = event.target.selectionStart
+    if event.key == 'Control' || event.key == 'Alt'
+      @state.prev_value = event.key
+    else if event.which != 229
+      @change_value(event, event.key)
+    else
+      @state.prev_value = event.target.value
+
 
   onchange: (event) ->
     value = event.target.value
@@ -129,9 +159,7 @@
 
     input_params =
       className: 'react_money_input form-control',
-      type: @props.type || 'text',
       pattern: @props.pattern,
-      inputMode: 'numeric',
       onKeyDown: @onkeydown,
       onKeyUp: @onkeyup,
       onKeyPress: @onkeypress,
@@ -140,6 +168,14 @@
       onBlur: @onblur,
       onClick: @onclick,
       value: @state.value,
+
+    if @props.type == 'auto'
+      if navigator.userAgent.match(/(iPad|iPhone|iPod)/g)
+        input_params['type'] = 'text'
+      else
+        input_params['type'] = 'tel'
+    else
+      input_params['type'] = @props.type || 'text'
 
     React.createElement('div', { className: 'form-group' },
       React.createElement('div', { className: 'input-group' },

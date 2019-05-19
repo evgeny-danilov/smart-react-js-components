@@ -61,6 +61,7 @@
       new_val = old_val.slice(0, pos) + key + old_val.slice(pos+1)
       return { val: new_val, pos: pos + 1 }
 
+  # just for tests on mobiles
   logger: (event) ->
     type = event.type
     which = event.which
@@ -83,10 +84,8 @@
 
   try_change_value: (event) ->
     return if @state.prev_value == null || @state.prev_value == undefined
-
     key = @get_key_by_diff(@state.prev_value, event.target.value)
     return if key == null || key == undefined
-
     @change_value(event, key)
 
   change_value: (event, key) ->
@@ -133,13 +132,11 @@
 
   onchange: (event) ->
     value = event.target.value
-
     value = '0,00' if !value.length
     value = value.replace(/[^0-9\,]/, '')
     while value.match(/\,/g).length > 1
       value = value.replace(/\,/, '') # delete dublicate decimals
     value = value + ',00' unless /[\,\.]/.test(value)
-
     @setState { value: value }
 
   onblur: (event) ->
@@ -154,9 +151,6 @@
       event.target.setSelectionRange(0, 0)
 
   render: ->
-    # if (Modernizr.oninput) - include onInput Event to Modernize lib
-    #
-
     input_params =
       className: 'react_money_input form-control',
       pattern: @props.pattern,
